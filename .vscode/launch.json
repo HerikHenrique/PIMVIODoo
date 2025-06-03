@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Odoo Server",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/odoo-bin/odoo-bin",
+            "console": "integratedTerminal",
+            "env": {
+                // PYTHONPATH garante que o Python encontre os módulos do Odoo.
+                // A configuração atual parece assumir que seu Odoo está dentro de um subdiretório 'odoo-bin'
+                // e que este subdiretório contém tanto o executável 'odoo-bin' quanto o pacote 'odoo'.
+                "PYTHONPATH": "${workspaceFolder}/odoo-bin:${workspaceFolder}/odoo-bin/odoo"
+            },
+            "args": [
+                "-c",
+                "${workspaceFolder}/odoo-bin/odoo.conf",
+                "--addons-path",
+                // Modifique esta linha para incluir seus addons customizados e, se aplicável, os addons enterprise.
+                // Exemplo: "${workspaceFolder}/custom-addons,${workspaceFolder}/enterprise,${workspaceFolder}/odoo-bin/addons"
+                // Se você não tiver addons customizados ou enterprise, pode manter apenas o caminho base:
+                "${workspaceFolder}/odoo-bin/addons", // Caminho base dos addons do Odoo
+                "--db-filter=^${env:DB_NAME}$",
+                "--dev=all"
+            ],
+            // Opcional: Defina como false para depurar o código do Odoo ou bibliotecas de terceiros.
+            // "justMyCode": false,
+            // Opcional: Defina como true para parar o depurador no início da execução do programa.
+            // "stopOnEntry": true
+        }
+    ]
+}
